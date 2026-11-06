@@ -28,6 +28,7 @@ visual é aceitável. Toda mudança visual passa pelo teste de regressão (abaix
 - `content/` dados (banners, anunciantes, home, globais) → viram coleções no Payload.
 - `lib/content.ts` única porta de leitura do conteúdo.
 - `components/layout` Header, Footer, menus · `components/blocks` seções e cards · `components/icons` SVGs originais.
+- `docs/MIGRACAO.md` inventário do que está nas contas do Aristoteles e vai para o cliente (manter atualizado a cada recurso novo).
 - `public/images` imagens originais (mesmos arquivos do WordPress) · `public/fonts` Roboto (latin/latin-ext).
 
 ## Teste visual (obrigatório antes de publicar)

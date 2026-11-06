@@ -36,16 +36,16 @@ export async function POST(req: Request) {
 
   const f = formularios[tipo];
   const linhas: [string, string][] = [];
+  const campos: Record<string, string> = {};
   for (const c of f.campos) {
     const v = String(dados[c.nome] ?? "")
       .slice(0, 5000)
       .trim();
     if (c.obrigatorio && !v)
       return NextResponse.json({ ok: false, campo: c.nome }, { status: 422 });
-    linhas.push([
-      c.rotulo.trim(),
-      c.tipo === "checkbox" ? (v ? "Sim" : "Não") : v,
-    ]);
+    const valor = c.tipo === "checkbox" ? (v ? "Sim" : "Não") : v;
+    linhas.push([c.rotulo.trim(), valor]);
+    campos[c.nome] = valor;
   }
   if (dados.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(dados.email))) {
     return NextResponse.json({ ok: false, campo: "email" }, { status: 422 });
@@ -85,9 +85,9 @@ export async function POST(req: Request) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          formulario: tipo,
+          formulario: f.titulo,
           data: quando,
-          ...Object.fromEntries(linhas),
+          ...campos,
         }),
       }).then((r) => {
         if (!r.ok) throw new Error(`webhook ${r.status}`);

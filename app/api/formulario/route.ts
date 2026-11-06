@@ -59,7 +59,10 @@ export async function POST(req: Request) {
   if (emailConfigurado()) {
     entregas.push(
       enviarEmail({
-        assunto: `[Site PromoPost] Novo ${f.titulo.toLowerCase()}${dados.nome ? ` — ${String(dados.nome).slice(0, 80)}` : ""}`,
+        assunto:
+          tipo === "contato"
+            ? (process.env.EMAIL_SUBJECT ?? "Contato via site")
+            : `${process.env.EMAIL_SUBJECT ?? "Contato via site"} (Cadastro)`,
         html: `<h2>Novo envio: ${esc(f.titulo)}</h2><table cellpadding="6">${linhas
           .map(
             ([k, v]) =>

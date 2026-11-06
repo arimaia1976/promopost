@@ -74,7 +74,7 @@ export const formularios: Record<"contato" | "cadastro", Formulario> = {
         rotulo: "Assunto",
         tipo: "select",
         obrigatorio: true,
-        opcoes: ["Anúncio", "Sugestão", "Crtítica", "Outros"],
+        opcoes: ["Anúncio", "Sugestão", "Crítica", "Outros"],
         grupo: "field_007e24f",
       },
       {

@@ -1,0 +1,10 @@
+/* Ajustes da reconstrução (fora do CSS extraído do site original). */
+
+/* Setas do carrossel: SVG no lugar do ícone de fonte (Font Awesome). */
+.owl-nav .owl-arrow {
+  display: inline-block;
+  width: 0.625em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}

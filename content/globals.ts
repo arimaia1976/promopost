@@ -1,3 +1,4 @@
+/** Conteúdo original usado só pela importação inicial (scripts/seed.ts). O site lê do CMS. */
 import type { Globals } from "@/types/content";
 
 const paginas = {
@@ -13,7 +14,10 @@ const paginas = {
   termos: { label: "Termos de Uso", href: "/termos-de-uso/" },
 };
 
-export const globals: Globals = {
+export const globals: Omit<
+  Globals,
+  "logo" | "logoRodape" | "logoRodapeCelular" | "qrCode" | "chamadaInstagram"
+> = {
   instagram: "https://www.instagram.com/promopostalphaville/",
   copyright: "Copyright © 2024 PromoPost",
   menuPrincipal: [paginas.home, paginas.sobre, paginas.contato],

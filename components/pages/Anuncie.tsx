@@ -1,3 +1,4 @@
+import type { PropsPagina } from "./tipos";
 import type { Anunciante, Banner } from "@/types/content";
 import { Carousel } from "@/components/blocks/Carousel";
 import { AnuncianteCard } from "@/components/blocks/AnuncianteCard";
@@ -5,14 +6,14 @@ import { AnuncianteCard } from "@/components/blocks/AnuncianteCard";
 /** Conteúdo da página "Anuncie" (estrutura e classes do original, para o CSS de referência). */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function PaginaAnuncie({
+  p,
   apoio,
   destaque,
-  texto,
-}: {
-  apoio: Banner[];
-  destaque: Anunciante[];
-  texto: string;
-}) {
+  beneficios,
+  tituloApoio,
+  tituloDestaque,
+  formularios,
+}: PropsPagina) {
   return (
     <main
       id="content"
@@ -32,10 +33,9 @@ export function PaginaAnuncie({
                 fetchPriority="high"
                 width="1400"
                 height="410"
-                src="/images/03.anuncie_1400x410-copy-1.webp"
+                src={p.banner?.src}
                 className="attachment-full size-full wp-image-1528"
-                alt=""
-                srcSet="/images/03.anuncie_1400x410-copy-1.webp 1400w, /images/03.anuncie_1400x410-copy-1-300x88.webp 300w, /images/03.anuncie_1400x410-copy-1-1024x300.webp 1024w, /images/03.anuncie_1400x410-copy-1-768x225.webp 768w"
+                alt={p.banner?.alt ?? ""}
               />{" "}
             </div>{" "}
           </div>{" "}
@@ -48,7 +48,7 @@ export function PaginaAnuncie({
           <div className="elementor-widget-container">
             {" "}
             <h1 className="elementor-heading-title elementor-size-default">
-              Anuncie
+              {p.titulo}
             </h1>{" "}
           </div>{" "}
         </div>{" "}
@@ -57,32 +57,16 @@ export function PaginaAnuncie({
           <div className="elementor-widget-container">
             {" "}
             <h3 className="elementor-heading-title elementor-size-default">
-              PromoPost Ads
+              {p.subtitulo}
             </h3>{" "}
           </div>{" "}
         </div>{" "}
         <div className="elementor-element elementor-element-e9cae14 elementor-widget elementor-widget-text-editor">
           {" "}
-          <div className="elementor-widget-container">
-            {" "}
-            <p>
-              Lojas, Restaurantes, Produtos, Comércios, Serviços, Saúde, Beleza,
-              Shoppings, Lançamentos, Novidades …mais!
-            </p>
-            <p>
-              Traga sua marca para nossa plataforma e seja visto pelo seleto
-              público que mora e trabalha em Alphaville e Região; são mais de
-              91.800 residentes e um fluxo diário de aproximadamente 240 mil
-              pessoas!
-            </p>
-            <p>É muita gente!!!</p>
-            <p>
-              Na PromoPost Alphaville seus Posts aparecem no nosso Instagram
-              conforme o planejamento das suas campanhas, ficam em destaque no
-              nosso site e atingem o público certo que vive, consome por aqui e
-              que adora Promoções!
-            </p>{" "}
-          </div>{" "}
+          <div
+            className="elementor-widget-container"
+            dangerouslySetInnerHTML={{ __html: p.html ?? "" }}
+          ></div>{" "}
         </div>{" "}
         <div className="elementor-element elementor-element-4108efb e-grid e-con-boxed e-con e-child">
           {" "}
@@ -112,12 +96,11 @@ export function PaginaAnuncie({
                     {" "}
                     <h3 className="elementor-icon-box-title">
                       {" "}
-                      <span> Amplie seu alcance </span>{" "}
+                      <span> {beneficios.alcance.titulo} </span>{" "}
                     </h3>{" "}
                     <p className="elementor-icon-box-description">
                       {" "}
-                      Apareça para mais de 330 mil pessoas que moram, trabalham,
-                      vivem e consomem diariamente em Alphaville e Região!{" "}
+                      {beneficios.alcance.texto}{" "}
                     </p>{" "}
                   </div>{" "}
                 </div>{" "}
@@ -147,13 +130,11 @@ export function PaginaAnuncie({
                     {" "}
                     <h3 className="elementor-icon-box-title">
                       {" "}
-                      <span> Venda mais </span>{" "}
+                      <span> {beneficios.venda.titulo} </span>{" "}
                     </h3>{" "}
                     <p className="elementor-icon-box-description">
                       {" "}
-                      Divulgue e atraia mais clientes com suas promoções,
-                      descontos, ofertas, benefícios, prêmios, sorteios,
-                      novidades, lançamentos e ações de marketing.{" "}
+                      {beneficios.venda.texto}{" "}
                     </p>{" "}
                   </div>{" "}
                 </div>{" "}
@@ -183,14 +164,11 @@ export function PaginaAnuncie({
                     {" "}
                     <h3 className="elementor-icon-box-title">
                       {" "}
-                      <span> Fortaleça sua marca </span>{" "}
+                      <span> {beneficios.fortaleca.titulo} </span>{" "}
                     </h3>{" "}
                     <p className="elementor-icon-box-description">
                       {" "}
-                      Aumente sua frequência no mercado Regional de Alphaville e
-                      mantenha uma relação de engajamento, interesse e
-                      relevância junto aos seus clientes e novos
-                      consumidores.{" "}
+                      {beneficios.fortaleca.texto}{" "}
                     </p>{" "}
                   </div>{" "}
                 </div>{" "}
@@ -241,13 +219,11 @@ export function PaginaAnuncie({
                     {" "}
                     <h3 className="elementor-icon-box-title">
                       {" "}
-                      <span> Redes Sociais </span>{" "}
+                      <span> {beneficios.redes.titulo} </span>{" "}
                     </h3>{" "}
                     <p className="elementor-icon-box-description">
                       {" "}
-                      Amplie ainda mais sua presença digital com nosso Instagram
-                      para divulgar e engajar quem mora ou trabalha na Região de
-                      Alphaville.{" "}
+                      {beneficios.redes.texto}{" "}
                     </p>{" "}
                   </div>{" "}
                 </div>{" "}
@@ -271,13 +247,13 @@ export function PaginaAnuncie({
                   {" "}
                   <a
                     className="elementor-button elementor-button-link elementor-size-sm"
-                    href="/contato/"
+                    href={p.botao?.href}
                   >
                     {" "}
                     <span className="elementor-button-content-wrapper">
                       {" "}
                       <span className="elementor-button-text">
-                        QUERO ANUNCIAR
+                        {p.botao?.label}
                       </span>{" "}
                     </span>{" "}
                   </a>{" "}
@@ -298,7 +274,7 @@ export function PaginaAnuncie({
               <div className="elementor-widget-container">
                 {" "}
                 <h2 className="elementor-heading-title elementor-size-default">
-                  EM DESTAQUE
+                  {tituloDestaque}
                 </h2>{" "}
               </div>{" "}
             </div>{" "}
@@ -325,7 +301,7 @@ export function PaginaAnuncie({
           <div className="elementor-widget-container">
             {" "}
             <h2 className="elementor-heading-title elementor-size-default">
-              APOIO INSTITUCIONAL
+              {tituloApoio}
             </h2>{" "}
           </div>{" "}
         </div>{" "}

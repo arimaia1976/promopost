@@ -1,16 +1,17 @@
+import type { PropsPagina } from "./tipos";
 import type { Anunciante, Banner } from "@/types/content";
 
 /** Conteúdo da página "Privacidade" (estrutura e classes do original, para o CSS de referência). */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function PaginaPrivacidade({
+  p,
   apoio,
   destaque,
-  texto,
-}: {
-  apoio: Banner[];
-  destaque: Anunciante[];
-  texto: string;
-}) {
+  beneficios,
+  tituloApoio,
+  tituloDestaque,
+  formularios,
+}: PropsPagina) {
   return (
     <main
       id="content"
@@ -38,7 +39,7 @@ export function PaginaPrivacidade({
           <div className="elementor-widget-container">
             {" "}
             <h1 className="elementor-heading-title elementor-size-default">
-              Política de Privacidade​
+              {p.titulo}
             </h1>{" "}
           </div>{" "}
         </div>{" "}
@@ -46,7 +47,7 @@ export function PaginaPrivacidade({
           {" "}
           <div
             className="elementor-widget-container"
-            dangerouslySetInnerHTML={{ __html: texto }}
+            dangerouslySetInnerHTML={{ __html: p.html ?? "" }}
           />{" "}
         </div>{" "}
       </div>

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./site.css";
 import "./ajustes.css";
 
+// conteúdo vem do CMS (com cache); páginas renderizadas no servidor
+export const dynamic = "force-dynamic";
+
 const isPreview = process.env.SITE_ENV !== "production";
 
 export const metadata: Metadata = {

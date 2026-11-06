@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { formularios } from "@/content/formularios";
+import { getFormularios } from "@/lib/content";
 import { emailConfigurado, enviarEmail } from "@/lib/email";
 
 /**
@@ -51,18 +52,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, campo: "email" }, { status: 422 });
   }
 
+  const cfg = (await getFormularios())[tipo];
   const quando = new Date().toLocaleString("pt-BR", {
     timeZone: "America/Sao_Paulo",
   });
   const entregas: Promise<unknown>[] = [];
 
-  if (emailConfigurado()) {
+  if (emailConfigurado(cfg.emailDestino)) {
     entregas.push(
       enviarEmail({
-        assunto:
-          tipo === "contato"
-            ? (process.env.EMAIL_SUBJECT ?? "Contato via site")
-            : `${process.env.EMAIL_SUBJECT ?? "Contato via site"} (Cadastro)`,
+        assunto: cfg.assunto,
+        para: cfg.emailDestino,
         html: `<h2>Novo envio: ${esc(f.titulo)}</h2><table cellpadding="6">${linhas
           .map(
             ([k, v]) =>

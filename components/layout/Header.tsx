@@ -26,9 +26,9 @@ export function Header({ globals, current }: Props) {
                       <img
                         width={412}
                         height={97}
-                        src="/images/Promopost_logo_Hor_neg.svg"
+                        src={globals.logo.src}
                         className="attachment-full size-full wp-image-1274"
-                        alt="PromoPost Alphaville"
+                        alt={globals.logo.alt}
                       />
                     </a>
                   </div>

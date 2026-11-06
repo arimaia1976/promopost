@@ -6,11 +6,20 @@ type Props = { globals: Globals; current: string };
 
 /** Rodapé: versão celular (272b472) e versão tablet/desktop (0e07b14), como no original. */
 export function Footer({ globals, current }: Props) {
-  const { instagram, copyright, menuRodape } = globals;
+  const {
+    instagram,
+    copyright,
+    menuRodape,
+    logoRodape,
+    logoRodapeCelular,
+    qrCode,
+    chamadaInstagram,
+  } = globals;
   return (
     <div
       role="contentinfo"
-      data-elementor-type="footer" data-elementor-id="1367"
+      data-elementor-type="footer"
+      data-elementor-id="1367"
       className="elementor elementor-1367 elementor-location-footer"
     >
       {" "}
@@ -27,7 +36,7 @@ export function Footer({ globals, current }: Props) {
                 <img
                   width="329"
                   height="326"
-                  src="/images/PromoPost_Color_Grad-1.svg"
+                  src={logoRodapeCelular.src}
                   className="attachment-large size-large wp-image-298"
                   alt="PromoPost"
                 />{" "}
@@ -116,11 +125,9 @@ export function Footer({ globals, current }: Props) {
                 <img
                   width="300"
                   height="300"
-                  src="/images/qr_PP-copy-300x300.webp"
+                  src={qrCode.src}
                   className="attachment-medium size-medium wp-image-1682"
                   alt="QR Code do Instagram da PromoPost"
-                  sizes="150px"
-                  srcSet="/images/qr_PP-copy-300x300.webp 300w, /images/qr_PP-copy-150x150.webp 150w, /images/qr_PP-copy.webp 633w"
                 />{" "}
               </div>{" "}
             </div>{" "}
@@ -129,7 +136,7 @@ export function Footer({ globals, current }: Props) {
               <div className="elementor-widget-container">
                 {" "}
                 <h2 className="elementor-heading-title elementor-size-default">
-                  <a href={instagram}>Segue a Gente</a>
+                  <a href={instagram}>{chamadaInstagram}</a>
                 </h2>{" "}
               </div>{" "}
             </div>{" "}
@@ -196,7 +203,7 @@ export function Footer({ globals, current }: Props) {
                 <img
                   width="172"
                   height="94"
-                  src="/images/PP_Logo_Vermelho.svg"
+                  src={logoRodape.src}
                   className="attachment-large size-large wp-image-94"
                   alt="PromoPost"
                 />{" "}
@@ -266,7 +273,7 @@ export function Footer({ globals, current }: Props) {
               <div className="elementor-widget-container">
                 {" "}
                 <h2 className="elementor-heading-title elementor-size-default">
-                  <a href={instagram}>Segue a Gente</a>
+                  <a href={instagram}>{chamadaInstagram}</a>
                 </h2>{" "}
               </div>{" "}
             </div>{" "}
@@ -290,11 +297,9 @@ export function Footer({ globals, current }: Props) {
                 <img
                   width="300"
                   height="300"
-                  src="/images/qr_PP-copy-300x300.webp"
+                  src={qrCode.src}
                   className="attachment-medium size-medium wp-image-1682"
                   alt="QR Code do Instagram da PromoPost"
-                  sizes="(max-width: 767px) 150px, (max-width: 1024px) 97px, 11vw"
-                  srcSet="/images/qr_PP-copy-300x300.webp 300w, /images/qr_PP-copy-150x150.webp 150w, /images/qr_PP-copy.webp 633w"
                 />{" "}
               </div>{" "}
             </div>{" "}

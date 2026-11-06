@@ -6,3 +6,6 @@ out
 tests/visual/output
 *.tsbuildinfo
 next-env.d.ts
+
+# uploads do CMS (ficam no volume do servidor)
+media/

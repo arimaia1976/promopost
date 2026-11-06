@@ -37,7 +37,20 @@ export type Beneficio = {
   texto: string;
 };
 
+export type Imagem = {
+  src: string;
+  alt: string;
+  largura?: number;
+  altura?: number;
+  srcSet?: string;
+};
+
 export type Globals = {
+  logo: Imagem;
+  logoRodape: Imagem;
+  logoRodapeCelular: Imagem;
+  qrCode: Imagem;
+  chamadaInstagram: string;
   instagram: string;
   copyright: string;
   menuPrincipal: MenuItem[];
@@ -59,4 +72,31 @@ export type Home = {
     altura: number;
   };
   beneficios: [Beneficio, Beneficio, Beneficio, Beneficio];
+};
+
+/** Conteúdo das páginas internas (cada página é um "global" no CMS). */
+export type Pagina = {
+  seo: { titulo: string; descricao?: string | null };
+  banner?: Imagem;
+  titulo: string;
+  subtitulo?: string;
+  /** HTML gerado a partir do texto formatado do CMS. */
+  html?: string;
+  blocos?: Beneficio[];
+  botao?: MenuItem;
+};
+
+export type ConfigFormulario = {
+  emailDestino?: string | null;
+  assunto: string;
+  botao: string;
+  sucesso: string;
+  erro: string;
+};
+
+export type Formularios = {
+  contato: ConfigFormulario;
+  cadastro: ConfigFormulario;
+  assuntos: string[];
+  textoNovidades: string;
 };

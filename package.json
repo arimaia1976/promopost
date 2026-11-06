@@ -9,18 +9,30 @@
     "test:visual": "node tests/visual/compare.mjs"
   },
   "dependencies": {
-    "next": "^15.5.29",
+    "@payloadcms/db-postgres": "^3.93.0",
+    "@payloadcms/next": "^3.93.0",
+    "@payloadcms/richtext-lexical": "^3.93.0",
+    "@payloadcms/ui": "^3.93.0",
+    "graphql": "^16.15.0",
+    "next": "^15.4.11",
     "nodemailer": "^10.3.1",
+    "payload": "^3.93.0",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "server-only": "^0.0.1",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
+    "@types/jsdom": "^30.0.0",
     "@types/node": "^26.6.6",
     "@types/nodemailer": "^8.0.2",
     "@types/react": "^19.3.0",
+    "jsdom": "^31.0.0",
     "pixelmatch": "^6.0.0",
     "playwright-core": "^1.65.0",
     "pngjs": "^7.0.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3"
-  }
+  },
+  "type": "module"
 }

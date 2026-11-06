@@ -12,12 +12,13 @@ type Mensagem = {
   html: string;
   texto: string;
   responderPara?: string;
+  para?: string | null;
 };
 
-export function emailConfigurado() {
+export function emailConfigurado(para?: string | null) {
   const p = process.env.EMAIL_PROVIDER;
   return (
-    !!process.env.EMAIL_TO &&
+    !!(para || process.env.EMAIL_TO) &&
     ((p === "resend" && !!process.env.RESEND_API_KEY) ||
       (p === "smtp" && !!process.env.SMTP_HOST))
   );
@@ -26,7 +27,7 @@ export function emailConfigurado() {
 export async function enviarEmail(m: Mensagem) {
   const from =
     process.env.EMAIL_FROM ?? "PromoPost <no-reply@promopost.com.br>";
-  const to = (process.env.EMAIL_TO ?? "")
+  const to = (m.para || process.env.EMAIL_TO || "")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);

@@ -33,7 +33,7 @@ export function Beneficios({ beneficios, imagem }: Props) {
                   src={imagem.src}
                   className="attachment-full size-full wp-image-1512"
                   alt=""
-                  srcSet={imagem.srcSet}
+                  srcSet={imagem.srcSet || undefined}
                   sizes="(max-width: 767px) calc(100vw - 20px), 36vw"
                 />{" "}
               </div>{" "}

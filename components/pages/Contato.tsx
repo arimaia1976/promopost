@@ -1,3 +1,4 @@
+import type { PropsPagina } from "./tipos";
 import type { Anunciante, Banner } from "@/types/content";
 import { Carousel } from "@/components/blocks/Carousel";
 import { ElementorForm } from "@/components/blocks/ElementorForm";
@@ -5,14 +6,14 @@ import { ElementorForm } from "@/components/blocks/ElementorForm";
 /** Conteúdo da página "Contato" (estrutura e classes do original, para o CSS de referência). */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function PaginaContato({
+  p,
   apoio,
   destaque,
-  texto,
-}: {
-  apoio: Banner[];
-  destaque: Anunciante[];
-  texto: string;
-}) {
+  beneficios,
+  tituloApoio,
+  tituloDestaque,
+  formularios,
+}: PropsPagina) {
   return (
     <main
       id="content"
@@ -32,10 +33,9 @@ export function PaginaContato({
                 fetchPriority="high"
                 width="1400"
                 height="410"
-                src="/images/04.contato_1400x410-copy-1.webp"
+                src={p.banner?.src}
                 className="attachment-full size-full wp-image-1606"
-                alt=""
-                srcSet="/images/04.contato_1400x410-copy-1.webp 1400w, /images/04.contato_1400x410-copy-1-300x88.webp 300w, /images/04.contato_1400x410-copy-1-1024x300.webp 1024w, /images/04.contato_1400x410-copy-1-768x225.webp 768w"
+                alt={p.banner?.alt ?? ""}
               />{" "}
             </div>{" "}
           </div>{" "}
@@ -54,26 +54,22 @@ export function PaginaContato({
             <div className="elementor-widget-container">
               {" "}
               <h1 className="elementor-heading-title elementor-size-default">
-                Contato
+                {p.titulo}
               </h1>{" "}
             </div>{" "}
           </div>{" "}
           <div className="elementor-element elementor-element-6b96927 elementor-widget__width-inherit elementor-widget elementor-widget-text-editor">
             {" "}
-            <div className="elementor-widget-container">
-              {" "}
-              <p>
-                Interessado em anunciar e saber mais sobre a PromoPost
-                Alphaville? Ou talvez queira compartilhar uma sugestão ou até
-                mesmo uma crítica?
-              </p>{" "}
-            </div>{" "}
+            <div
+              className="elementor-widget-container"
+              dangerouslySetInnerHTML={{ __html: p.html ?? "" }}
+            ></div>{" "}
           </div>{" "}
           <div className="elementor-element elementor-element-95db6c7 elementor-widget__width-inherit elementor-button-align-stretch elementor-widget elementor-widget-form">
             {" "}
             <div className="elementor-widget-container">
               {" "}
-              <ElementorForm tipo="contato" />{" "}
+              <ElementorForm tipo="contato" config={formularios} />{" "}
             </div>{" "}
           </div>{" "}
         </div>{" "}
@@ -85,7 +81,7 @@ export function PaginaContato({
           <div className="elementor-widget-container">
             {" "}
             <h2 className="elementor-heading-title elementor-size-default">
-              APOIO INSTITUCIONAL
+              {tituloApoio}
             </h2>{" "}
           </div>{" "}
         </div>{" "}

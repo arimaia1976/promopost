@@ -1,17 +1,18 @@
+import type { PropsPagina } from "./tipos";
 import type { Anunciante, Banner } from "@/types/content";
 import { Carousel } from "@/components/blocks/Carousel";
 
 /** Conteúdo da página "Sobre" (estrutura e classes do original, para o CSS de referência). */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function PaginaSobre({
+  p,
   apoio,
   destaque,
-  texto,
-}: {
-  apoio: Banner[];
-  destaque: Anunciante[];
-  texto: string;
-}) {
+  beneficios,
+  tituloApoio,
+  tituloDestaque,
+  formularios,
+}: PropsPagina) {
   return (
     <main
       id="content"
@@ -31,10 +32,9 @@ export function PaginaSobre({
                 fetchPriority="high"
                 width="1400"
                 height="410"
-                src="/images/02.produto_1400x410-copy-1.webp"
+                src={p.banner?.src}
                 className="attachment-full size-full wp-image-1602"
-                alt=""
-                srcSet="/images/02.produto_1400x410-copy-1.webp 1400w, /images/02.produto_1400x410-copy-1-300x88.webp 300w, /images/02.produto_1400x410-copy-1-1024x300.webp 1024w, /images/02.produto_1400x410-copy-1-768x225.webp 768w"
+                alt={p.banner?.alt ?? ""}
               />{" "}
             </div>{" "}
           </div>{" "}
@@ -47,7 +47,7 @@ export function PaginaSobre({
           <div className="elementor-widget-container">
             {" "}
             <h1 className="elementor-heading-title elementor-size-default">
-              Sobre Nós
+              {p.titulo}
             </h1>{" "}
           </div>{" "}
         </div>{" "}
@@ -79,18 +79,11 @@ export function PaginaSobre({
                     {" "}
                     <h3 className="elementor-icon-box-title">
                       {" "}
-                      <span> CONSUMIDOR </span>{" "}
+                      <span> {p.blocos?.[0]?.titulo} </span>{" "}
                     </h3>{" "}
                     <p className="elementor-icon-box-description">
                       {" "}
-                      A PromoPost Alphaville é o lugar certo para quem mora ou
-                      trabalha na região; vive, consome e gosta de ficar por
-                      dentro e participar de promoções! As melhores promoções,
-                      ofertas, descontos, prêmios, benefícios, sorteios e
-                      novidades do mercado aparecem aqui para que você possa
-                      escolher as que são de seu interesse. Siga no Instagram,
-                      cadastre-se aqui no site e fique sabendo das melhores
-                      promoções de Alphaville e Região!{" "}
+                      {p.blocos?.[0]?.texto}{" "}
                     </p>{" "}
                   </div>{" "}
                 </div>{" "}
@@ -120,20 +113,11 @@ export function PaginaSobre({
                     {" "}
                     <h3 className="elementor-icon-box-title">
                       {" "}
-                      <span> ANUNCIANTE </span>{" "}
+                      <span> {p.blocos?.[1]?.titulo} </span>{" "}
                     </h3>{" "}
                     <p className="elementor-icon-box-description">
                       {" "}
-                      A PromoPost Alphaville é pra você que já faz Promoções no
-                      seu negócio para aumentar as vendas e atrair mais
-                      clientes! Utilizamos o poder do Instagram para divulgar e
-                      engajar quem mora ou trabalha na Região de Alphaville. São
-                      mais de 91.800 residentes e um fluxo diário de
-                      aproximadamente 240 mil pessoas! É muita gente!!! Na
-                      PromoPost Alphaville seus Posts aparecem no nosso
-                      Instagram conforme o planejamento das suas campanhas,
-                      atingindo o público certo que consome por aqui e que adora
-                      Promoções! Entre em contato conosco para saber mais!{" "}
+                      {p.blocos?.[1]?.texto}{" "}
                     </p>{" "}
                   </div>{" "}
                 </div>{" "}
@@ -149,7 +133,7 @@ export function PaginaSobre({
           <div className="elementor-widget-container">
             {" "}
             <h2 className="elementor-heading-title elementor-size-default">
-              APOIO INSTITUCIONAL
+              {tituloApoio}
             </h2>{" "}
           </div>{" "}
         </div>{" "}

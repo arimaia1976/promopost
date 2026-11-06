@@ -1,16 +1,17 @@
+import type { PropsPagina } from "./tipos";
 import type { Anunciante, Banner } from "@/types/content";
 
 /** Conteúdo da página "Termos" (estrutura e classes do original, para o CSS de referência). */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function PaginaTermos({
+  p,
   apoio,
   destaque,
-  texto,
-}: {
-  apoio: Banner[];
-  destaque: Anunciante[];
-  texto: string;
-}) {
+  beneficios,
+  tituloApoio,
+  tituloDestaque,
+  formularios,
+}: PropsPagina) {
   return (
     <main
       id="content"
@@ -25,7 +26,7 @@ export function PaginaTermos({
           <div className="elementor-widget-container">
             {" "}
             <h1 className="elementor-heading-title elementor-size-default">
-              Termos de Uso
+              {p.titulo}
             </h1>{" "}
           </div>{" "}
         </div>{" "}
@@ -33,7 +34,7 @@ export function PaginaTermos({
           {" "}
           <div
             className="elementor-widget-container"
-            dangerouslySetInnerHTML={{ __html: texto }}
+            dangerouslySetInnerHTML={{ __html: p.html ?? "" }}
           />{" "}
         </div>{" "}
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { formularios, type Campo } from "@/content/formularios";
+import type { Formularios } from "@/types/content";
 
 /** Máscara do original: (11) 99999-9999 */
 function mascaraTelefone(v: string) {
@@ -125,8 +126,29 @@ function CampoForm({ c }: { c: Campo }) {
 }
 
 /** Formulário com a mesma marcação do Elementor Forms; envia para /api/formulario. */
-export function ElementorForm({ tipo }: { tipo: "contato" | "cadastro" }) {
-  const f = formularios[tipo];
+export function ElementorForm({
+  tipo,
+  config,
+}: {
+  tipo: "contato" | "cadastro";
+  config: Formularios;
+}) {
+  const base = formularios[tipo];
+  const cms = config[tipo];
+  // textos editáveis no painel (botão, mensagens, opções do assunto, caixinha de novidades)
+  const f = {
+    ...base,
+    botao: cms.botao,
+    sucesso: cms.sucesso,
+    erro: cms.erro,
+    campos: base.campos.map((c) =>
+      c.tipo === "select"
+        ? { ...c, opcoes: config.assuntos }
+        : c.tipo === "checkbox"
+          ? { ...c, rotulo: config.textoNovidades }
+          : c,
+    ),
+  };
   const [estado, setEstado] = useState<"livre" | "enviando" | "ok" | "erro">(
     "livre",
   );

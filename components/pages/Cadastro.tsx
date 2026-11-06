@@ -1,3 +1,4 @@
+import type { PropsPagina } from "./tipos";
 import type { Anunciante, Banner } from "@/types/content";
 import { Carousel } from "@/components/blocks/Carousel";
 import { ElementorForm } from "@/components/blocks/ElementorForm";
@@ -5,14 +6,14 @@ import { ElementorForm } from "@/components/blocks/ElementorForm";
 /** Conteúdo da página "Cadastro" (estrutura e classes do original, para o CSS de referência). */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function PaginaCadastro({
+  p,
   apoio,
   destaque,
-  texto,
-}: {
-  apoio: Banner[];
-  destaque: Anunciante[];
-  texto: string;
-}) {
+  beneficios,
+  tituloApoio,
+  tituloDestaque,
+  formularios,
+}: PropsPagina) {
   return (
     <main
       id="content"
@@ -32,10 +33,9 @@ export function PaginaCadastro({
                 fetchPriority="high"
                 width="1400"
                 height="410"
-                src="/images/07.cadastro_1400x410-copy-2.webp"
+                src={p.banner?.src}
                 className="attachment-full size-full wp-image-2936"
-                alt=""
-                srcSet="/images/07.cadastro_1400x410-copy-2.webp 1400w, /images/07.cadastro_1400x410-copy-2-300x88.webp 300w, /images/07.cadastro_1400x410-copy-2-1024x300.webp 1024w, /images/07.cadastro_1400x410-copy-2-768x225.webp 768w"
+                alt={p.banner?.alt ?? ""}
               />{" "}
             </div>{" "}
           </div>{" "}
@@ -48,28 +48,22 @@ export function PaginaCadastro({
           <div className="elementor-widget-container">
             {" "}
             <h1 className="elementor-heading-title elementor-size-default">
-              Cadastro
+              {p.titulo}
             </h1>{" "}
           </div>{" "}
         </div>{" "}
         <div className="elementor-element elementor-element-836d5a7 elementor-widget__width-inherit elementor-widget elementor-widget-text-editor">
           {" "}
-          <div className="elementor-widget-container">
-            {" "}
-            <p style={{ textAlign: "center" }}>
-              Faça seu cadastro na PromoPost para ficar por dentro das Melhores
-              Promoções de Alphaville e Região!
-              <br />
-              Quando tivermos novidades e promoções exclusivas você receberá
-              nosso e-mail em primeira mão, aguarde!
-            </p>{" "}
-          </div>{" "}
+          <div
+            className="elementor-widget-container"
+            dangerouslySetInnerHTML={{ __html: p.html ?? "" }}
+          ></div>{" "}
         </div>{" "}
         <div className="elementor-element elementor-element-60ff717 elementor-button-align-stretch elementor-widget elementor-widget-form">
           {" "}
           <div className="elementor-widget-container">
             {" "}
-            <ElementorForm tipo="cadastro" />{" "}
+            <ElementorForm tipo="cadastro" config={formularios} />{" "}
           </div>{" "}
         </div>{" "}
       </div>
@@ -80,7 +74,7 @@ export function PaginaCadastro({
           <div className="elementor-widget-container">
             {" "}
             <h2 className="elementor-heading-title elementor-size-default">
-              APOIO INSTITUCIONAL
+              {tituloApoio}
             </h2>{" "}
           </div>{" "}
         </div>{" "}

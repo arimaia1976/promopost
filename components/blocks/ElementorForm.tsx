@@ -22,7 +22,7 @@ function CampoForm({ c }: { c: Campo }) {
       <div className={grupo}>
         <div className="elementor-field-subgroup ">
           <span className="elementor-field-option">
-            <input type="checkbox" value="Sim" id={`${id}-0`} name={c.nome} />
+            <input type="checkbox" value="Sim" id={`${id}-0`} name={c.nome} />{" "}
             <label htmlFor={`${id}-0`}>{c.rotulo}</label>
           </span>
         </div>

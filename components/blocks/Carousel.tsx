@@ -104,7 +104,8 @@ export function Carousel({
               width: `${larguraItem}px`,
               ...(margem ? { marginRight: `${margem}px` } : {}),
             }
-          : undefined
+          : // Antes do JavaScript: cada item ocupa exatamente a largura visível.
+            { width: `${100 / faixa.length}%` }
       }
       aria-hidden={!visivel(i)}
     >
@@ -189,13 +190,17 @@ export function Carousel({
             className="owl-stage"
             onTransitionEnd={fimTransicao}
             style={{
-              transform: `translate3d(${-pos * passo + desloc}px, 0px, 0px)`,
+              // Antes do JavaScript (largura ainda desconhecida), posiciona em % para
+              // o 1º banner já aparecer no lugar certo, sem salto ao carregar.
+              transform: larguraItem
+                ? `translate3d(${-pos * passo + desloc}px, 0px, 0px)`
+                : `translate3d(${(-pos / faixa.length) * 100}%, 0px, 0px)`,
               transition: animar
                 ? `all ${velocidade / 1000}s ease 0s`
                 : "all 0s ease 0s",
               width: larguraItem
                 ? `${Math.ceil(passo * faixa.length)}px`
-                : undefined,
+                : `${faixa.length * 100}%`,
             }}
           >
             {faixa.map((s, i) => item(s, i, loop && (i < k || i >= k + total)))}

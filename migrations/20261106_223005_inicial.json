@@ -2,9 +2,9 @@
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.banners": {
+    "site.banners": {
       "name": "banners",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -130,6 +130,7 @@
           "name": "banners_imagem_id_media_id_fk",
           "tableFrom": "banners",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "imagem_id"
           ],
@@ -146,9 +147,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.anunciantes": {
+    "site.anunciantes": {
       "name": "anunciantes",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -189,7 +190,7 @@
         "secao": {
           "name": "secao",
           "type": "enum_anunciantes_secao",
-          "typeSchema": "public",
+          "typeSchema": "site",
           "primaryKey": false,
           "notNull": true,
           "default": "'ofertas'"
@@ -275,6 +276,7 @@
           "name": "anunciantes_imagem_id_media_id_fk",
           "tableFrom": "anunciantes",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "imagem_id"
           ],
@@ -291,9 +293,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.media": {
+    "site.media": {
       "name": "media",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -306,6 +308,19 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
+        },
+        "prefix": {
+          "name": "prefix",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "_objectkey": {
+          "name": "_objectkey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "updated_at": {
           "name": "updated_at",
@@ -430,9 +445,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.users_sessions": {
+    "site.users_sessions": {
       "name": "users_sessions",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "_order": {
           "name": "_order",
@@ -502,6 +517,7 @@
           "name": "users_sessions_parent_id_fk",
           "tableFrom": "users_sessions",
           "tableTo": "users",
+          "schemaTo": "site",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -518,9 +534,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.users": {
+    "site.users": {
       "name": "users",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -652,9 +668,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_kv": {
+    "site.payload_kv": {
       "name": "payload_kv",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -699,9 +715,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_locked_documents": {
+    "site.payload_locked_documents": {
       "name": "payload_locked_documents",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -784,9 +800,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_locked_documents_rels": {
+    "site.payload_locked_documents_rels": {
       "name": "payload_locked_documents_rels",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -949,6 +965,7 @@
           "name": "payload_locked_documents_rels_parent_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "payload_locked_documents",
+          "schemaTo": "site",
           "columnsFrom": [
             "parent_id"
           ],
@@ -962,6 +979,7 @@
           "name": "payload_locked_documents_rels_banners_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "banners",
+          "schemaTo": "site",
           "columnsFrom": [
             "banners_id"
           ],
@@ -975,6 +993,7 @@
           "name": "payload_locked_documents_rels_anunciantes_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "anunciantes",
+          "schemaTo": "site",
           "columnsFrom": [
             "anunciantes_id"
           ],
@@ -988,6 +1007,7 @@
           "name": "payload_locked_documents_rels_media_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "media_id"
           ],
@@ -1001,6 +1021,7 @@
           "name": "payload_locked_documents_rels_users_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "users",
+          "schemaTo": "site",
           "columnsFrom": [
             "users_id"
           ],
@@ -1017,9 +1038,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_preferences": {
+    "site.payload_preferences": {
       "name": "payload_preferences",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1108,9 +1129,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_preferences_rels": {
+    "site.payload_preferences_rels": {
       "name": "payload_preferences_rels",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1210,6 +1231,7 @@
           "name": "payload_preferences_rels_parent_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "payload_preferences",
+          "schemaTo": "site",
           "columnsFrom": [
             "parent_id"
           ],
@@ -1223,6 +1245,7 @@
           "name": "payload_preferences_rels_users_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "users",
+          "schemaTo": "site",
           "columnsFrom": [
             "users_id"
           ],
@@ -1239,9 +1262,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_migrations": {
+    "site.payload_migrations": {
       "name": "payload_migrations",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1315,9 +1338,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.home": {
+    "site.home": {
       "name": "home",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1384,6 +1407,7 @@
           "name": "home_imagem_beneficios_id_media_id_fk",
           "tableFrom": "home",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "imagem_beneficios_id"
           ],
@@ -1400,9 +1424,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.sobre_blocos": {
+    "site.sobre_blocos": {
       "name": "sobre_blocos",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "_order": {
           "name": "_order",
@@ -1472,6 +1496,7 @@
           "name": "sobre_blocos_parent_id_fk",
           "tableFrom": "sobre_blocos",
           "tableTo": "sobre",
+          "schemaTo": "site",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -1488,9 +1513,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.sobre": {
+    "site.sobre": {
       "name": "sobre",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1557,6 +1582,7 @@
           "name": "sobre_banner_id_media_id_fk",
           "tableFrom": "sobre",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "banner_id"
           ],
@@ -1573,9 +1599,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.anuncie": {
+    "site.anuncie": {
       "name": "anuncie",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1666,6 +1692,7 @@
           "name": "anuncie_banner_id_media_id_fk",
           "tableFrom": "anuncie",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "banner_id"
           ],
@@ -1682,9 +1709,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.contato": {
+    "site.contato": {
       "name": "contato",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1757,6 +1784,7 @@
           "name": "contato_banner_id_media_id_fk",
           "tableFrom": "contato",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "banner_id"
           ],
@@ -1773,9 +1801,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.cadastro": {
+    "site.cadastro": {
       "name": "cadastro",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1848,6 +1876,7 @@
           "name": "cadastro_banner_id_media_id_fk",
           "tableFrom": "cadastro",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "banner_id"
           ],
@@ -1864,9 +1893,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.privacidade": {
+    "site.privacidade": {
       "name": "privacidade",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1919,9 +1948,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.termos": {
+    "site.termos": {
       "name": "termos",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -1974,9 +2003,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.cabecalho_menu_desktop": {
+    "site.cabecalho_menu_desktop": {
       "name": "cabecalho_menu_desktop",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "_order": {
           "name": "_order",
@@ -2046,6 +2075,7 @@
           "name": "cabecalho_menu_desktop_parent_id_fk",
           "tableFrom": "cabecalho_menu_desktop",
           "tableTo": "cabecalho",
+          "schemaTo": "site",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -2062,9 +2092,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.cabecalho_menu_celular": {
+    "site.cabecalho_menu_celular": {
       "name": "cabecalho_menu_celular",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "_order": {
           "name": "_order",
@@ -2134,6 +2164,7 @@
           "name": "cabecalho_menu_celular_parent_id_fk",
           "tableFrom": "cabecalho_menu_celular",
           "tableTo": "cabecalho",
+          "schemaTo": "site",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -2150,9 +2181,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.cabecalho_botoes": {
+    "site.cabecalho_botoes": {
       "name": "cabecalho_botoes",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "_order": {
           "name": "_order",
@@ -2222,6 +2253,7 @@
           "name": "cabecalho_botoes_parent_id_fk",
           "tableFrom": "cabecalho_botoes",
           "tableTo": "cabecalho",
+          "schemaTo": "site",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -2238,9 +2270,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.cabecalho": {
+    "site.cabecalho": {
       "name": "cabecalho",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -2289,6 +2321,7 @@
           "name": "cabecalho_logo_id_media_id_fk",
           "tableFrom": "cabecalho",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "logo_id"
           ],
@@ -2305,9 +2338,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.rodape_menu": {
+    "site.rodape_menu": {
       "name": "rodape_menu",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "_order": {
           "name": "_order",
@@ -2377,6 +2410,7 @@
           "name": "rodape_menu_parent_id_fk",
           "tableFrom": "rodape_menu",
           "tableTo": "rodape",
+          "schemaTo": "site",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -2393,9 +2427,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.rodape": {
+    "site.rodape": {
       "name": "rodape",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -2504,6 +2538,7 @@
           "name": "rodape_logo_id_media_id_fk",
           "tableFrom": "rodape",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "logo_id"
           ],
@@ -2517,6 +2552,7 @@
           "name": "rodape_logo_celular_id_media_id_fk",
           "tableFrom": "rodape",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "logo_celular_id"
           ],
@@ -2530,6 +2566,7 @@
           "name": "rodape_qr_code_id_media_id_fk",
           "tableFrom": "rodape",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "qr_code_id"
           ],
@@ -2546,9 +2583,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.apoio_banners": {
+    "site.apoio_banners": {
       "name": "apoio_banners",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "_order": {
           "name": "_order",
@@ -2640,6 +2677,7 @@
           "name": "apoio_banners_imagem_id_media_id_fk",
           "tableFrom": "apoio_banners",
           "tableTo": "media",
+          "schemaTo": "site",
           "columnsFrom": [
             "imagem_id"
           ],
@@ -2653,6 +2691,7 @@
           "name": "apoio_banners_parent_id_fk",
           "tableFrom": "apoio_banners",
           "tableTo": "apoio",
+          "schemaTo": "site",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -2669,9 +2708,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.apoio": {
+    "site.apoio": {
       "name": "apoio",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -2706,9 +2745,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.vitrine": {
+    "site.vitrine": {
       "name": "vitrine",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -2749,9 +2788,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.beneficios": {
+    "site.beneficios": {
       "name": "beneficios",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -2828,9 +2867,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.formularios_assuntos": {
+    "site.formularios_assuntos": {
       "name": "formularios_assuntos",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "_order": {
           "name": "_order",
@@ -2894,6 +2933,7 @@
           "name": "formularios_assuntos_parent_id_fk",
           "tableFrom": "formularios_assuntos",
           "tableTo": "formularios",
+          "schemaTo": "site",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -2910,9 +2950,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.formularios": {
+    "site.formularios": {
       "name": "formularios",
-      "schema": "",
+      "schema": "site",
       "columns": {
         "id": {
           "name": "id",
@@ -3009,16 +3049,18 @@
     }
   },
   "enums": {
-    "public.enum_anunciantes_secao": {
+    "site.enum_anunciantes_secao": {
       "name": "enum_anunciantes_secao",
-      "schema": "public",
+      "schema": "site",
       "values": [
         "destaque",
         "ofertas"
       ]
     }
   },
-  "schemas": {},
+  "schemas": {
+    "site": "site"
+  },
   "sequences": {},
   "roles": {},
   "policies": {},
@@ -3028,6 +3070,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "a09c5379-bf9a-4705-a92d-11765fee146c",
+  "id": "7adb4005-9177-4924-87b5-be689042d413",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

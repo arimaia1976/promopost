@@ -5,10 +5,10 @@
  */
 import "server-only";
 import config from "@payload-config";
-import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
 import { unstable_cache } from "next/cache";
 import { getPayload } from "payload";
 import { TAG_CONTEUDO } from "@/payload/revalidar";
+import { richTextParaHtml } from "./richtext";
 import type {
   Anunciante,
   Banner,
@@ -47,9 +47,6 @@ function img(m: Midia): Imagem {
 const links = (l?: { label: string; href: string }[] | null): MenuItem[] =>
   (l ?? []).map(({ label, href }) => ({ label, href }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const html = (rt: any) =>
-  rt ? convertLexicalToHTML({ data: rt, disableContainer: true }) : "";
 
 export const getGlobals = unstable_cache(
   async (): Promise<Globals> => {
@@ -202,7 +199,7 @@ export const getPagina = unstable_cache(
       banner: g.banner ? img(g.banner) : undefined,
       titulo: g.titulo,
       subtitulo: g.subtitulo ?? undefined,
-      html: g.texto ? html(g.texto) : undefined,
+      html: g.texto ? richTextParaHtml(g.texto, { paragrafosEmListas: slug === "privacidade" }) : undefined,
       blocos: g.blocos?.map((b: { titulo: string; texto: string }) => ({
         titulo: b.titulo,
         texto: b.texto,

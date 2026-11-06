@@ -51,6 +51,20 @@ export function PaginaPrivacidade({
           />{" "}
         </div>{" "}
       </div>
+      {/* espaçador do original (visível só no celular) */}
+      <div className="elementor-element elementor-element-fab8e99 e-con-full elementor-hidden-desktop elementor-hidden-tablet e-flex e-con e-parent">
+        {" "}
+        <div className="elementor-element elementor-element-edc5e87 elementor-widget elementor-widget-spacer">
+          {" "}
+          <div className="elementor-widget-container">
+            {" "}
+            <div className="elementor-spacer">
+              {" "}
+              <div className="elementor-spacer-inner"></div>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>
     </main>
   );
 }

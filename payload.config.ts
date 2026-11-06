@@ -3,10 +3,11 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { pt } from "@payloadcms/translations/languages/pt";
 import path from "path";
 import { buildConfig } from "payload";
-import sharp from "sharp";
+import sharp from "./payload/sharp-original";
 import { fileURLToPath } from "url";
 import { collections } from "./payload/collections";
 import { globals } from "./payload/globals";
+import { armazenamento } from "./payload/armazenamento";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,10 +26,13 @@ export default buildConfig({
   typescript: { outputFile: path.resolve(dirname, "types/payload-types.ts") },
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URL || "" },
+    // esquema próprio (não usa o "public"): isola o site e é igual em todos os ambientes
+    schemaName: "site",
     // estrutura do banco versionada em /migrations (necessário para produção)
     migrationDir: path.resolve(dirname, "migrations"),
     push: process.env.NODE_ENV !== "production",
   }),
   sharp,
+  plugins: [armazenamento],
   telemetry: false,
 });

@@ -1,8 +1,10 @@
 [build]
-  command = "npm run build"
+  command = "npm run build:netlify"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "22"
   # Prévia: noindex. Em produção (VPS) SITE_ENV=production.
   SITE_ENV = "preview"
+  MEDIA_STORAGE = "netlify"
+  NODE_OPTIONS = "--no-deprecation --max-old-space-size=4096"

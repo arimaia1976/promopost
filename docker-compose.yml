@@ -1,0 +1,60 @@
+# Servidor do cliente: docker compose up -d   (ver docs/SERVIDOR.md)
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: promopost
+      POSTGRES_USER: promopost
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?defina DB_PASSWORD no .env}
+    volumes:
+      - dados-banco:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U promopost -d promopost"]
+      interval: 5s
+      retries: 20
+
+  site:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://promopost:${DB_PASSWORD}@db:5432/promopost
+      MEDIA_DIR: /app/media
+    volumes:
+      - imagens:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # HTTPS automático (Let's Encrypt) para o domínio definido em DOMINIO
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMINIO: ${DOMINIO:-localhost}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-dados:/data
+    depends_on: [site]
+
+  # backup diário (banco + imagens) em ./backups, guarda os últimos 14 dias
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      PGPASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./backups:/backups
+      - imagens:/imagens:ro
+      - ./docker/backup.sh:/backup.sh:ro
+    entrypoint: ["sh", "-c", "while true; do sh /backup.sh; sleep 86400; done"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  dados-banco:
+  imagens:
+  caddy-dados:

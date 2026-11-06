@@ -6,8 +6,18 @@ visual é aceitável. Toda mudança visual passa pelo teste de regressão (abaix
 
 ## Fases
 - **M1/M2 (agora):** páginas idênticas, conteúdo em `/content`. Prévia na Netlify (grátis, noindex).
-- **M3:** Payload CMS (coleções Banners e Anunciantes, globais). Só `lib/content.ts` muda.
-- **M5:** produção no VPS do cliente (Node + Postgres em Docker).
+- **M3 (feito):** Payload CMS em `/admin`. Fonte única: blocos repetidos são globais
+  (Cabeçalho, Rodapé, Apoio, Vitrine, Benefícios, Formulários); cada página é um global.
+- **M5:** produção no servidor do cliente com `docker compose` (ver `docs/SERVIDOR.md`).
+
+## CMS (Payload)
+- Config: `payload.config.ts`, `payload/collections`, `payload/globals`. Esquema do banco `site`.
+- Migrações em `/migrations` (gerar com `npx payload migrate:create nome` após mudar campos).
+- `scripts/seed.ts` importa o conteúdo original (só roda com banco vazio em `npm run cms:seed`).
+- `payload/sharp-original.ts`: guarda as imagens enviadas sem recomprimir (fidelidade).
+- `lib/richtext.ts`: texto do editor → HTML idêntico ao original (estilos e listas da Privacidade).
+- Imagens: disco local (`MEDIA_DIR`) no servidor; Netlify Blobs na prévia (`MEDIA_STORAGE=netlify`).
+- Alterar conteúdo no painel limpa o cache (`payload/revalidar.ts`); banners agendados entram em até 60 s.
 
 ## Stack
 - Next.js 15 (App Router) + TypeScript 5. Sem Tailwind, sem jQuery, sem bibliotecas de UI.

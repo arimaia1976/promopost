@@ -21,11 +21,62 @@ import { privacidade, termos } from "../content/legais";
 import ricos from "../content/ricos.json";
 
 const payload = await getPayload({ config });
+
+// SEED_SE_VAZIO=1: só importa se o banco ainda não tiver conteúdo (usado no build/deploy)
+if (process.env.SEED_SE_VAZIO) {
+  const { totalDocs } = await payload.count({ collection: "banners" });
+  if (totalDocs > 0) {
+    payload.logger.info("Banco já tem conteúdo: importação ignorada.");
+    process.exit(0);
+  }
+}
 const editorConfig = await editorConfigFactory.default({
   config: payload.config,
 });
-const rico = (html: string) =>
-  convertHTMLToLexical({ editorConfig, html, JSDOM });
+// preserva espaços não separáveis (&nbsp;) do original: o conversor os troca por espaço comum
+const NBSP = "\uE000";
+function restauraNbsp(n: unknown): unknown {
+  if (Array.isArray(n)) return n.map(restauraNbsp);
+  if (n && typeof n === "object") {
+    const o = n as Record<string, unknown>;
+    for (const k of Object.keys(o)) o[k] = k === "text" && typeof o[k] === "string" ? (o[k] as string).replaceAll(NBSP, "\u00a0") : restauraNbsp(o[k]);
+  }
+  return n;
+}
+// Trechos com tamanho de fonte próprio no original (<span style="font-size: 1rem">): o conversor
+// descarta o estilo. Alinhamos bloco a bloco (original ↔ editor) e reaplicamos o estilo no texto
+// do editor, só onde ele existia (lib/richtext.ts o publica como <span style>).
+type NoLx = { type?: string; text?: string; style?: string; children?: NoLx[] };
+const norm = (t: string) => t.replace(/\s+/g, " ").trim();
+function textos(n: NoLx, out: NoLx[] = []) {
+  if (n.type === "text") out.push(n);
+  n.children?.forEach((c) => textos(c, out));
+  return out;
+}
+function aplicaEstilos(estado: { root: NoLx }, html: string) {
+  const doc = new JSDOM(html).window.document;
+  let blocos = [...doc.body.children];
+  if (blocos.length === 1 && blocos[0].tagName === "DIV") blocos = [...blocos[0].children];
+  const nos = estado.root.children ?? [];
+  if (blocos.length !== nos.length) return estado; // estrutura diferente: não arrisca
+  blocos.forEach((bloco, i) => {
+    const spans = [...bloco.querySelectorAll<HTMLElement>("span[style*='font-size']")];
+    if (!spans.length) return;
+    const estilo = `font-size: ${spans[0].style.fontSize}`;
+    const alvos = spans.map((s) => norm(s.textContent ?? ""));
+    for (const t of textos(nos[i])) {
+      const tt = norm(t.text ?? "");
+      if ((!tt && alvos.some((x) => !x)) || (tt && alvos.some((x) => x && (x.includes(tt) || tt.includes(x))))) t.style = estilo;
+    }
+  });
+  return estado;
+}
+const rico = (html: string) => {
+  const estado = restauraNbsp(
+    convertHTMLToLexical({ editorConfig, html: html.replace(/&#xa0;|&nbsp;|&#160;|\u00a0/gi, NBSP), JSDOM }),
+  ) as ReturnType<typeof convertHTMLToLexical>;
+  return aplicaEstilos(estado as unknown as { root: NoLx }, html) as unknown as typeof estado;
+};
 
 // ── imagens ──
 await payload.delete({ collection: "media", where: { id: { exists: true } } });

@@ -11,6 +11,7 @@ export function AnuncianteCard({ anunciante: a, modelo }: Props) {
     <div className="jet-listing-grid__item">
       <div
         data-elementor-type="jet-listing-items"
+        data-elementor-id={modelo}
         className={`elementor elementor-${modelo}`}
       >
         <div className="elementor-element elementor-element-f77d086 e-con-full e-flex e-con e-child">

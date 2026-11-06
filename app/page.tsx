@@ -33,6 +33,7 @@ export default async function HomePage() {
       <main
         id="content"
         data-elementor-type="wp-page"
+        data-elementor-id="15"
         className="elementor elementor-15"
       >
         <Hero banners={topo} titulo={home.tituloPrincipal} />

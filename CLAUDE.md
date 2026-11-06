@@ -15,7 +15,10 @@ visual é aceitável. Toda mudança visual passa pelo teste de regressão (abaix
 
 ## Como a fidelidade é garantida
 - `app/site.css` = **somente as regras de CSS que o site original usa**, extraídas do
-  Elementor/plugins (de ~35 arquivos para 1). Não editar à mão; ajustes vão em `app/ajustes.css`.
+  Elementor/plugins (de ~35 arquivos para 1), na ordem original. Gerado por
+  `scripts/build-css.mjs`; não editar à mão. Ajustes vão em `app/ajustes.css`.
+- Manter os atributos `data-elementor-id` nos wrappers (página, header, footer, cards):
+  o CSS do Elementor centraliza blocos por eles.
 - Os componentes mantêm a mesma estrutura e as classes do original
   (`elementor-element-<id>` etc.), porque o CSS depende delas. Não "limpar" essas classes.
 - Comportamentos refeitos sem jQuery: carrossel (`components/blocks/Carousel.tsx`, mesmos
@@ -35,5 +38,7 @@ visual é aceitável. Toda mudança visual passa pelo teste de regressão (abaix
 
 ## Regras
 - Mobile first, sem rolagem horizontal; SEO (metadata, h1 único, alt), noindex na prévia.
-- Formulários: e-mail do cliente e/ou planilha; provedor de e-mail configurável por variável de ambiente.
+- Formulários (`components/blocks/ElementorForm.tsx`, campos em `content/formularios.ts`):
+  enviam para `app/api/formulario` → e-mail (`lib/email.ts`, SMTP ou Resend por variável de
+  ambiente) e/ou planilha via `FORM_WEBHOOK_URL`. Nada fica guardado no site. Ver `.env.example`.
 - Conteúdo sempre via props/dados, nunca fixo nos componentes.

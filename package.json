@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "next": "^15.5.29",
+    "nodemailer": "^10.3.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19.3.0",
     "pixelmatch": "^6.0.0",
     "playwright-core": "^1.65.0",

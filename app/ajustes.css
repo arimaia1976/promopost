@@ -8,3 +8,15 @@
   vertical-align: -0.125em;
   fill: currentColor;
 }
+
+/* Estados do formulário (mensagens de envio/erro) — regras do Elementor Pro Forms. */
+.elementor-error .elementor-field { border-color: #d9534f; }
+.elementor-error .help-inline { color: #d9534f; font-size: 0.9em; }
+.elementor-message { font-size: 1em; line-height: 1; margin: 10px 0; }
+.elementor-message.elementor-message-danger { color: #d9534f; }
+.elementor-message.elementor-message-success { color: #5cb85c; }
+.elementor-widget-form .elementor-message {
+  font-family: var(--e-global-typography-text-font-family), Sans-serif;
+  font-weight: var(--e-global-typography-text-font-weight);
+}
+.elementor-form .elementor-button[disabled] { opacity: 0.6; cursor: wait; }

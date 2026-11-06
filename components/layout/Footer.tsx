@@ -10,7 +10,7 @@ export function Footer({ globals, current }: Props) {
   return (
     <div
       role="contentinfo"
-      data-elementor-type="footer"
+      data-elementor-type="footer" data-elementor-id="1367"
       className="elementor elementor-1367 elementor-location-footer"
     >
       {" "}

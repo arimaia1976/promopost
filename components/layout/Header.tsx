@@ -12,6 +12,7 @@ export function Header({ globals, current }: Props) {
     <div
       role="banner"
       data-elementor-type="header"
+      data-elementor-id="1363"
       className="elementor elementor-1363 elementor-location-header"
     >
       <div className="elementor-element elementor-element-e08d06c e-flex e-con-boxed e-con e-parent e-lazyloaded">

@@ -2,7 +2,9 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   // esquema próprio do site (ver payload.config.ts)
-  await db.execute(sql`CREATE SCHEMA IF NOT EXISTS "site";`)
+  await db.execute(sql`DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'site') THEN CREATE SCHEMA "site"; END IF;
+  END $$;`)
   await db.execute(sql`
    CREATE TYPE "site"."enum_anunciantes_secao" AS ENUM('destaque', 'ofertas');
   CREATE TABLE "site"."banners" (

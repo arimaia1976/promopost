@@ -34,6 +34,12 @@ export function PaginaCadastro({
                 width="1400"
                 height="410"
                 src={p.banner?.src}
+                srcSet={
+                  p.banner
+                    ? `${p.banner.src} ${p.banner.largura ?? 1400}w`
+                    : undefined
+                }
+                sizes="100vw"
                 className="attachment-full size-full wp-image-2936"
                 alt={p.banner?.alt ?? ""}
               />{" "}

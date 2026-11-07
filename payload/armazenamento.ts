@@ -32,7 +32,16 @@ const netlifyBlobs: Adapter = () => ({
     if (params.filename in imagensPublicas) return original();
     const { getStore } = await import("@netlify/blobs");
     const chave = params.prefix ? `${params.prefix}/${params.filename}` : params.filename;
-    const item = await getStore({ name: LOJA, consistency: "strong" }).getWithMetadata(chave, { type: "arrayBuffer" });
+    const busca = getStore({ name: LOJA, consistency: "strong" }).getWithMetadata(chave, { type: "arrayBuffer" });
+    const limite = new Promise<"tempo">((r) => setTimeout(() => r("tempo"), 10000));
+    const item = await Promise.race([busca, limite]).catch((e) => {
+      console.error("[midia] erro ao ler da loja", chave, e);
+      return null;
+    });
+    if (item === "tempo") {
+      console.error("[midia] loja não respondeu em 10 s", chave);
+      return new Response("Imagem indisponível", { status: 504 });
+    }
     if (item === null) return original();
     return new Response(item.data as ArrayBuffer, {
       headers: {

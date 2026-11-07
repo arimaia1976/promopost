@@ -25,6 +25,10 @@ async function capture(browser, url, width, file) {
   await page.clock.install({ time: new Date("2026-11-06T12:00:00") });
   await page.goto(url, { waitUntil: "networkidle" });
   await page.clock.runFor(1000); // inicializa carrosséis, sem chegar ao autoplay (3 s)
+  // o carrossel jQuery do site original às vezes avança um slide sozinho ao carregar
+  // (condição de corrida); fixa no 1º slide, que é o estado configurado
+  await page.evaluate(() => { if (window.jQuery) window.jQuery(".owl-carousel").trigger("stop.owl.autoplay").trigger("to.owl.carousel", [0, 0]); });
+  await page.clock.runFor(50);
   await page.evaluate(async () => {
     document.querySelectorAll("img[data-src]").forEach((i) => { i.src = i.dataset.src; if (i.dataset.srcset) i.srcset = i.dataset.srcset; if (i.dataset.sizes === "auto") i.sizes = i.getBoundingClientRect().width + "px"; i.classList.remove("lazyload"); i.classList.add("lazyloaded"); });
     document.querySelectorAll("img.lazyautosizes").forEach((i) => { i.classList.remove("lazyautosizes"); i.removeAttribute("data-sizes"); i.sizes = Math.round(i.getBoundingClientRect().width) + "px"; });

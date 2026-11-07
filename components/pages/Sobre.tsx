@@ -35,7 +35,8 @@ export function PaginaSobre({
                 src={p.banner?.src}
                 srcSet={
                   p.banner
-                    ? `${p.banner.src} ${p.banner.largura ?? 1400}w`
+                    ? (p.banner.srcSet ??
+                      `${p.banner.src} ${p.banner.largura ?? 1400}w`)
                     : undefined
                 }
                 sizes="100vw"

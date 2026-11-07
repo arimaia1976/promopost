@@ -39,25 +39,29 @@ type Midia =
 
 // Imagens originais do site (mesmo nome e tamanho) são servidas como arquivo estático de /images:
 // mais rápido e sem passar pelo banco. Imagens novas enviadas no painel usam a URL do CMS.
-const publicas = imagensPublicas as Record<string, number>;
-function urlImagem(m: {
-  url?: string | null;
-  filename?: string | null;
-  filesize?: number | null;
-}) {
-  if (m.filename && m.filesize && publicas[m.filename] === m.filesize)
-    return `/images/${m.filename}`;
-  return m.url ?? "";
-}
+type Publica = { t: number; v: [number, string][] };
+const publicas = imagensPublicas as unknown as Record<string, Publica>;
 
 function img(m: Midia): Imagem {
   if (!m || typeof m === "number") return { src: "", alt: "" };
-  return {
-    src: urlImagem(m),
+  const base = {
     alt: m.alt ?? "",
     largura: m.width ?? undefined,
     altura: m.height ?? undefined,
   };
+  const pub = m.filename ? publicas[m.filename] : undefined;
+  if (pub && m.filesize === pub.t) {
+    // original do site: arquivo estático + as mesmas versões reduzidas que o WordPress gerou
+    const src = `/images/${m.filename}`;
+    const srcSet = pub.v.length
+      ? [
+          `${src} ${m.width}w`,
+          ...pub.v.map(([w, f]) => `/images/${f} ${w}w`),
+        ].join(", ")
+      : undefined;
+    return { ...base, src, srcSet };
+  }
+  return { ...base, src: m.url ?? "" };
 }
 
 const links = (l?: { label: string; href: string }[] | null): MenuItem[] =>
@@ -106,7 +110,7 @@ export const getHome = unstable_cache(
       tituloApoio: a.titulo,
       imagemBeneficios: {
         src: i.src,
-        srcSet: "",
+        srcSet: i.srcSet ?? "",
         largura: i.largura ?? 677,
         altura: i.altura ?? 479,
       },

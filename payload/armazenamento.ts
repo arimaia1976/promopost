@@ -7,6 +7,7 @@
  */
 import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
 import type { Adapter } from "@payloadcms/plugin-cloud-storage/types";
+import imagensPublicas from "../content/imagens-publicas.json";
 
 const LOJA = "promopost-media";
 
@@ -25,13 +26,14 @@ const netlifyBlobs: Adapter = () => ({
     await getStore({ name: LOJA, consistency: "strong" }).delete(storageFilePath || filename);
   },
   async staticHandler(req, { params }) {
+    const original = () =>
+      new Response(null, { status: 307, headers: { Location: `/images/${encodeURIComponent(params.filename)}` } });
+    // imagem original do site (importada no seed): não está na loja, vem de /images
+    if (params.filename in imagensPublicas) return original();
     const { getStore } = await import("@netlify/blobs");
     const chave = params.prefix ? `${params.prefix}/${params.filename}` : params.filename;
     const item = await getStore({ name: LOJA, consistency: "strong" }).getWithMetadata(chave, { type: "arrayBuffer" });
-    if (item === null) {
-      // imagem original do site (importada no seed)
-      return Response.redirect(new URL(`/images/${encodeURIComponent(params.filename)}`, req.url), 307);
-    }
+    if (item === null) return original();
     return new Response(item.data as ArrayBuffer, {
       headers: {
         "Content-Type": String(item.metadata?.contentType ?? "application/octet-stream"),

@@ -126,6 +126,8 @@ export function Footer({ globals, current }: Props) {
                   width="300"
                   height="300"
                   src={qrCode.src}
+                  srcSet={qrCode.srcSet}
+                  sizes="150px"
                   className="attachment-medium size-medium wp-image-1682"
                   alt="QR Code do Instagram da PromoPost"
                 />{" "}
@@ -298,6 +300,8 @@ export function Footer({ globals, current }: Props) {
                   width="300"
                   height="300"
                   src={qrCode.src}
+                  srcSet={qrCode.srcSet}
+                  sizes="(max-width: 767px) 150px, (max-width: 1024px) 97px, 11vw"
                   className="attachment-medium size-medium wp-image-1682"
                   alt="QR Code do Instagram da PromoPost"
                 />{" "}

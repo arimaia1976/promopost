@@ -8,6 +8,7 @@ import config from "@payload-config";
 import { unstable_cache } from "next/cache";
 import { getPayload } from "payload";
 import { TAG_CONTEUDO } from "@/payload/revalidar";
+import imagensPublicas from "@/content/imagens-publicas.json";
 import { richTextParaHtml } from "./richtext";
 import type {
   Anunciante,
@@ -26,6 +27,8 @@ const cms = () => getPayload({ config });
 type Midia =
   | {
       url?: string | null;
+      filename?: string | null;
+      filesize?: number | null;
       alt?: string | null;
       width?: number | null;
       height?: number | null;
@@ -34,10 +37,23 @@ type Midia =
   | null
   | undefined;
 
+// Imagens originais do site (mesmo nome e tamanho) são servidas como arquivo estático de /images:
+// mais rápido e sem passar pelo banco. Imagens novas enviadas no painel usam a URL do CMS.
+const publicas = imagensPublicas as Record<string, number>;
+function urlImagem(m: {
+  url?: string | null;
+  filename?: string | null;
+  filesize?: number | null;
+}) {
+  if (m.filename && m.filesize && publicas[m.filename] === m.filesize)
+    return `/images/${m.filename}`;
+  return m.url ?? "";
+}
+
 function img(m: Midia): Imagem {
   if (!m || typeof m === "number") return { src: "", alt: "" };
   return {
-    src: m.url ?? "",
+    src: urlImagem(m),
     alt: m.alt ?? "",
     largura: m.width ?? undefined,
     altura: m.height ?? undefined,
@@ -46,7 +62,6 @@ function img(m: Midia): Imagem {
 
 const links = (l?: { label: string; href: string }[] | null): MenuItem[] =>
   (l ?? []).map(({ label, href }) => ({ label, href }));
-
 
 export const getGlobals = unstable_cache(
   async (): Promise<Globals> => {
@@ -199,7 +214,11 @@ export const getPagina = unstable_cache(
       banner: g.banner ? img(g.banner) : undefined,
       titulo: g.titulo,
       subtitulo: g.subtitulo ?? undefined,
-      html: g.texto ? richTextParaHtml(g.texto, { paragrafosEmListas: slug === "privacidade" }) : undefined,
+      html: g.texto
+        ? richTextParaHtml(g.texto, {
+            paragrafosEmListas: slug === "privacidade",
+          })
+        : undefined,
       blocos: g.blocos?.map((b: { titulo: string; texto: string }) => ({
         titulo: b.titulo,
         texto: b.texto,

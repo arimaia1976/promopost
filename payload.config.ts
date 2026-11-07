@@ -25,7 +25,11 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: { outputFile: path.resolve(dirname, "types/payload-types.ts") },
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URL || "" },
+    pool: {
+      connectionString: process.env.DATABASE_URL || "",
+      // funções serverless (prévia): poucas conexões por instância; servidor: padrão 10
+      max: Number(process.env.DB_POOL_MAX || 10),
+    },
     // esquema próprio (não usa o "public"): isola o site e é igual em todos os ambientes
     schemaName: "site",
     // estrutura do banco versionada em /migrations (necessário para produção)

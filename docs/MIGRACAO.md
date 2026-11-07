@@ -11,7 +11,7 @@ Atualizado a cada etapa do projeto.
 |---|------|--------------------|-------------------|-------------|
 | 1 | Código do site | GitHub `arimaia1976/promopost` | GitHub do cliente (ou só no servidor) | *Transfer ownership* no GitHub, ou `git clone --mirror` + push no repo novo |
 | 2 | Prévia online | Netlify `promopost-previa` (time "Persona") | Não migra — some após a virada | Apagar o projeto no Netlify **depois** da virada do domínio |
-| 3 | Variáveis de ambiente | Netlify (EMAIL_*, FORM_WEBHOOK_URL, RESEND_API_KEY) | Arquivo `.env` no servidor do cliente | Recriar a partir de `.env.example` com os dados do cliente |
+| 3 | Variáveis de ambiente | Netlify (DATABASE_URL, DATABASE_URL_SESSAO, DB_POOL_MAX, PAYLOAD_SECRET, MEDIA_STORAGE, SITE_ENV, EMAIL_*, FORM_WEBHOOK_URL, RESEND_API_KEY) | Arquivo `.env` no servidor do cliente | Recriar a partir de `.env.example` com os dados do cliente |
 | 4 | Envio de e-mail dos formulários | Resend (conta arimaia1976), remetente de teste `onboarding@resend.dev`, destino arimaia1976@gmail.com | SMTP do e-mail do cliente **ou** Resend do cliente com domínio promopost.com.br verificado | Trocar `EMAIL_PROVIDER`, credenciais, `EMAIL_FROM` e `EMAIL_TO`; registros DNS (SPF/DKIM) no domínio do cliente |
 | 5 | Planilha de envios | Google Drive arimaia1976 — "PromoPost – Envios do site" | Google Drive do cliente | Transferir a propriedade da planilha (Compartilhar → transferir) ou fazer cópia na conta dele |
 | 6 | Automação planilha | Make (conta do Aristoteles): webhook `PromoPost – formulários do site` + cenário | Make do cliente **ou** substituir por envio direto do site | Exportar o blueprint do cenário e importar na conta dele; atualizar `FORM_WEBHOOK_URL` |

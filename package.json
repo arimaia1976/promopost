@@ -9,7 +9,7 @@
     "test:visual": "node tests/visual/compare.mjs",
     "cms:migrate": "NODE_ENV=production payload migrate",
     "cms:seed": "NODE_ENV=production SEED_SE_VAZIO=1 payload run scripts/seed.ts",
-    "build:netlify": "npm run cms:migrate && SEED_SEM_ARQUIVOS=1 npm run cms:seed && next build",
+    "build:netlify": "DATABASE_URL=${DATABASE_URL_SESSAO:-$DATABASE_URL} npm run cms:migrate && DATABASE_URL=${DATABASE_URL_SESSAO:-$DATABASE_URL} SEED_SEM_ARQUIVOS=1 npm run cms:seed && next build",
     "payload": "payload"
   },
   "dependencies": {

@@ -43,6 +43,33 @@ export function Carousel({
   const [animar, setAnimar] = useState(false);
   const [pausado, setPausado] = useState(false);
   const arraste = useRef<{ x: number; dx: number } | null>(null);
+  // Imagens dos outros slides: carregam todas assim que o carrossel chega perto da tela
+  // (depois do carregamento da página), para nenhum banner entrar em branco na troca.
+  const [todas, setTodas] = useState(false);
+
+  useEffect(() => {
+    const el = outerRef.current;
+    if (!el) return;
+    let io: IntersectionObserver | undefined;
+    const observar = () => {
+      io = new IntersectionObserver(
+        (entradas) => {
+          if (entradas.some((e) => e.isIntersecting)) {
+            setTodas(true);
+            io?.disconnect();
+          }
+        },
+        { rootMargin: "600px 0px" },
+      );
+      io.observe(el);
+    };
+    if (document.readyState === "complete") observar();
+    else window.addEventListener("load", observar, { once: true });
+    return () => {
+      window.removeEventListener("load", observar);
+      io?.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const el = outerRef.current;
@@ -126,7 +153,7 @@ export function Carousel({
                   width={s.largura}
                   height={s.altura}
                   fetchPriority={prioridade && i === k ? "high" : undefined}
-                  loading={prioridade && i === k ? undefined : "lazy"}
+                  loading={todas || (prioridade && i === k) ? "eager" : "lazy"}
                 />
               </a>
             ) : (
@@ -135,7 +162,7 @@ export function Carousel({
                 alt={s.alt}
                 width={s.largura}
                 height={s.altura}
-                loading="lazy"
+                loading={todas ? "eager" : "lazy"}
               />
             )}
           </div>

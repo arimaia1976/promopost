@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./site.css";
 import "./ajustes.css";
 
-// conteúdo vem do CMS (com cache); páginas renderizadas no servidor
-export const dynamic = "force-dynamic";
+// páginas em cache na CDN; o painel invalida na hora (revalidateTag) e banners agendados entram em até 60 s
+export const revalidate = 60;
 
 const isPreview = process.env.SITE_ENV !== "production";
 

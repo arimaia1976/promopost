@@ -27,8 +27,11 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || "",
-      // funções serverless (prévia): poucas conexões por instância; servidor: padrão 10
-      max: Number(process.env.DB_POOL_MAX || 10),
+      // Mínimo 5: com 2 conexões, excluir e editar travam (o Payload abre uma transação e ainda
+      // precisa de outras conexões ao mesmo tempo). Servidor: padrão 10.
+      max: Math.max(5, Number(process.env.DB_POOL_MAX || 10)),
+      // se faltar conexão, responde com erro em vez de ficar travado até o tempo limite
+      connectionTimeoutMillis: 10000,
     },
     // esquema próprio (não usa o "public"): isola o site e é igual em todos os ambientes
     schemaName: "site",

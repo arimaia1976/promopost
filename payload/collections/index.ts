@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { revalidarSite } from "../revalidar";
 import { bannerFields, imagem } from "../fields/comuns";
+import { bloquearImagemEmUso } from "../imagem-em-uso";
 
 const publico = { read: () => true };
 
@@ -30,7 +31,11 @@ export const Midia: CollectionConfig = {
       required: true,
     },
   ],
-  hooks: { afterChange: [revalidarSite], afterDelete: [revalidarSite] },
+  hooks: {
+    beforeDelete: [bloquearImagemEmUso],
+    afterChange: [revalidarSite],
+    afterDelete: [revalidarSite],
+  },
 };
 
 export const BannersTopo: CollectionConfig = {

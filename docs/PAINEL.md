@@ -25,4 +25,5 @@ Tudo o que você salvar aparece no site em instantes.
   cards 500×300). A imagem é publicada exatamente como enviada.
 - **Ordem:** número menor aparece primeiro.
 - **Tirar do ar sem apagar:** desmarque **Ativo**.
+- **Excluir imagem:** só é possível se ela não estiver em uso. Se estiver, o painel avisa onde; troque lá e exclua depois.
 - **Texto alternativo** das imagens ajuda no Google e na acessibilidade — descreva a imagem em poucas palavras.

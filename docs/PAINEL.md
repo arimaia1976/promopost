@@ -26,4 +26,5 @@ Tudo o que você salvar aparece no site em instantes.
 - **Ordem:** número menor aparece primeiro.
 - **Tirar do ar sem apagar:** desmarque **Ativo**.
 - **Excluir imagem:** só é possível se ela não estiver em uso. Se estiver, o painel avisa onde; troque lá e exclua depois.
+- **Esqueci a senha:** na tela de login, informe seu e-mail e siga o link recebido. O link vale por 1 hora.
 - **Texto alternativo** das imagens ajuda no Google e na acessibilidade — descreva a imagem em poucas palavras.

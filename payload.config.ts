@@ -8,11 +8,13 @@ import { fileURLToPath } from "url";
 import { collections } from "./payload/collections";
 import { globals } from "./payload/globals";
 import { armazenamento } from "./payload/armazenamento";
+import { emailPainel } from "./payload/email-painel";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default buildConfig({
-  serverURL: process.env.SITE_URL_PUBLICA || undefined,
+  // endereço público: necessário para o link do e-mail de recuperação de senha
+  serverURL: process.env.SITE_URL_PUBLICA || process.env.SITE_URL || undefined,
   admin: {
     user: "users",
     meta: { titleSuffix: " – Painel PromoPost" },
@@ -22,6 +24,7 @@ export default buildConfig({
   collections,
   globals,
   editor: lexicalEditor(),
+  email: emailPainel,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: { outputFile: path.resolve(dirname, "types/payload-types.ts") },
   db: postgresAdapter({
